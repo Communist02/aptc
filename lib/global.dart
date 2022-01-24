@@ -1,0 +1,1 @@
+Map<String, String> appSettings = {'theme': 'system'};
