@@ -72,7 +72,7 @@ class AppThemes {
         unselectedItemColor: Colors.grey,
       ),
       tabBarTheme: const TabBarTheme(
-        labelColor: Colors.black,
+        labelColor: Colors.white,
         unselectedLabelColor: Colors.white,
       ),
     );
