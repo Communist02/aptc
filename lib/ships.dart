@@ -40,7 +40,7 @@ class ShipView extends StatelessWidget {
                 margin: const EdgeInsets.fromLTRB(2, 2, 10, 2),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: const Icon(Icons.directions_boat_outlined),
+                  child: const Icon(Icons.directions_boat_outlined, size: 100,),
                 ),
               ),
               Flexible(

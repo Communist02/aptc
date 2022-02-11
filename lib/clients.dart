@@ -98,7 +98,8 @@ class _ClientsPageState extends State<ClientsPage> {
       ),
     );
 
-    return ListView(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Row(
           children: [
@@ -152,23 +153,30 @@ class _ClientsPageState extends State<ClientsPage> {
             Padding(
               padding: const EdgeInsets.all(10),
               child: ElevatedButton(
-                onPressed: isEdit ? () {
-                  setState(() {
-                    for (int i = clients.length - 1; i >= 0; i--) {
-                      if (selected[i]) {
-                        clients.removeAt(i);
+                onPressed: isEdit
+                    ? () {
+                        setState(() {
+                          for (int i = clients.length - 1; i >= 0; i--) {
+                            if (selected[i]) {
+                              clients.removeAt(i);
+                            }
+                          }
+                          selected = List<bool>.generate(
+                              clients.length, (int index) => false);
+                        });
                       }
-                    }
-                    selected = List<bool>.generate(
-                        clients.length, (int index) => false);
-                  });
-                } : null,
+                    : null,
                 child: const Text('Удалить выбранное'),
               ),
             ),
           ],
         ),
-        table,
+        Expanded(
+          child: SingleChildScrollView(
+            key: const PageStorageKey('Clients'),
+            child: table,
+          ),
+        ),
       ],
     );
   }
