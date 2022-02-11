@@ -36,8 +36,10 @@ class _HomePageState extends State<HomePage> {
                 height: 80,
                 radius: 15,
                 elevation: 1,
-                labelStyle:
-                    const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
+                labelStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600),
                 unselectedLabelStyle: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.w600),
                 buttonMargin:
