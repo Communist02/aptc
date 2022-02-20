@@ -6,8 +6,7 @@ import 'requests.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -35,16 +34,23 @@ class _HomePageState extends State<HomePage> {
               child: ButtonsTabBar(
                 height: 80,
                 radius: 15,
-                elevation: 1,
-                labelStyle: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
+                borderWidth: 1.5,
+                duration: 0,
+                labelSpacing: 10,
+                borderColor: Theme.of(context).tabBarTheme.labelColor!,
+                unselectedBorderColor: Colors.transparent,
+                labelStyle: TextStyle(
+                    fontSize: 26,
+                    color: Theme.of(context).tabBarTheme.unselectedLabelColor,
                     fontWeight: FontWeight.w600),
-                unselectedLabelStyle: const TextStyle(
-                    color: Colors.black, fontWeight: FontWeight.w600),
+                unselectedLabelStyle: TextStyle(
+                  color: Theme.of(context).tabBarTheme.unselectedLabelColor,
+                  fontWeight: FontWeight.w600,
+                ),
                 buttonMargin:
                     const EdgeInsets.only(left: 10, top: 6, bottom: 6),
-                backgroundColor: Colors.deepPurpleAccent,
+                backgroundColor: Colors.transparent,
+                unselectedBackgroundColor: Colors.transparent,
                 contentPadding: const EdgeInsets.symmetric(horizontal: 14),
                 tabs: const [
                   Tab(

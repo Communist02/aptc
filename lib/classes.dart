@@ -41,13 +41,13 @@ class Client {
 
 class Request {
   String id;
-  String title;
   String description;
+  Map value;
   String idClient;
   String nameClient;
   DateTime dateTime = DateTime.now();
 
-  Request(this.title, this.description, this.idClient, this.nameClient, this.dateTime, {this.id = ''});
+  Request(this.description, this.value, this.idClient, this.nameClient, this.dateTime, {this.id = ''});
 }
 
 class Message {

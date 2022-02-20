@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'classes.dart';
 import 'global.dart';
+import 'firebase.dart';
 
 class RequestsPage extends StatefulWidget {
   const RequestsPage({Key? key}) : super(key: key);
@@ -11,87 +12,131 @@ class RequestsPage extends StatefulWidget {
 }
 
 class _RequestsPageState extends State<RequestsPage> {
+  final CloudStore _cloudStore = CloudStore();
   int number = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Flexible(
-          child: SizedBox(
-            width: 400,
-            child: ListView.builder(
-              key: const PageStorageKey('Requests'),
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              itemCount: 300,
-              itemBuilder: (context, int i) {
-                return InkWell(
-                  onTap: () {
-                    setState(() {
-                      number = i;
-                    });
-                  },
-                  child: RequestView(globalRequests[0], number == i),
-                );
-              },
-            ),
+    List<Widget> requestView(Map request) {
+      List<Widget> requests = [
+        Container(
+          margin: const EdgeInsets.all(10),
+          child: Text(
+            globalRequests[number].description,
+            style: const TextStyle(fontSize: 36, fontWeight: FontWeight.w600),
           ),
         ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Card(
-                    margin: const EdgeInsets.all(10),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(90),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Row(
-                        children: [
-                          const Icon(Icons.person_outlined),
-                          Text(
-                            globalRequests[number].nameClient,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Написать'),
-                  ),
-                ],
+      ];
+      for (final name in request.keys) {
+        requests.add(
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 10),
+            child: Text(
+              name + ': ' + request[name],
+              style: const TextStyle(fontSize: 24),
+            ),
+          ),
+        );
+      }
+      return requests;
+    }
+
+    Widget requestsView() {
+      return Row(
+        children: [
+          Flexible(
+            child: Card(
+              margin: EdgeInsets.zero,
+              elevation: 3,
+              shape: const RoundedRectangleBorder(),
+              child: SizedBox(
+                width: 400,
+                child: ListView.builder(
+                  key: const PageStorageKey('Requests'),
+                  itemCount: globalRequests.length,
+                  itemBuilder: (context, int i) {
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          number = i;
+                        });
+                      },
+                      child: RequestView(globalRequests[i], number == i),
+                    );
+                  },
+                ),
               ),
-              Expanded(
-                child: ListView(
+            ),
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                   children: [
-                    Container(
+                    Card(
                       margin: const EdgeInsets.all(10),
-                      child: Text(
-                        globalRequests[number].title,
-                        style: const TextStyle(
-                            fontSize: 36, fontWeight: FontWeight.w600),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(90),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Row(
+                          children: [
+                            const Icon(Icons.person_outlined),
+                            Text(
+                              globalRequests[number].nameClient,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      child: Text(globalRequests[number].description),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Написать'),
                     ),
                   ],
                 ),
-              ),
-            ],
+                Expanded(
+                  child: ListView(
+                    children: requestView(globalRequests[number].value),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      );
+    }
+
+    return FutureBuilder(
+      future: _cloudStore.getRequests(),
+      initialData: globalRequests,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+            return const Center(child: Text('Нет сети'));
+          case ConnectionState.waiting:
+          //return const Center(child: CircularProgressIndicator());
+          case ConnectionState.active:
+          //return const Center(child: CircularProgressIndicator());
+          case ConnectionState.done:
+            if (snapshot.hasError) {
+              return const Center(child: Text('Ошибка'));
+            } else {
+              globalRequests = snapshot.data;
+              if (snapshot.data.length == 0) {
+                return const Center(child: Text('Нет заявок'));
+              } else {
+                return requestsView();
+              }
+            }
+        }
+      },
     );
   }
 }
@@ -105,16 +150,10 @@ class RequestView extends StatelessWidget {
   String dateTime(DateTime dateTime) {
     final DateTime timeNow = DateTime.now();
     final Duration difference = timeNow.difference(dateTime);
-    if (difference.inMinutes < 1) {
-      return difference.inSeconds.toString() + ' сек. назад';
-    } else if (difference.inHours < 1) {
-      return difference.inMinutes.toString() + ' мин. назад';
-    } else if (difference.inDays < 1) {
-      return difference.inHours.toString() + ' ч. назад';
-    } else if (difference.inDays < 2) {
-      return 'Вчера';
-    } else if (difference.inDays < 7) {
-      return difference.inDays.toString() + ' д. назад';
+    if (difference.inDays < 1) {
+      return DateFormat('HH:mm').format(dateTime);
+    } else if (dateTime.year == timeNow.year) {
+      return DateFormat('dd.MM').format(dateTime);
     } else {
       return DateFormat('dd.MM.yyyy').format(dateTime);
     }
@@ -122,47 +161,43 @@ class RequestView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 0,
+    return Container(
       color: isActive
-          ? Theme.of(context).colorScheme.primary.withOpacity(0.2)
-          : Theme.of(context).cardColor,
+          ? Theme.of(context).colorScheme.primary.withOpacity(0.3)
+          : null,
       margin: EdgeInsets.zero,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 2, bottom: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    request.nameClient,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                    ),
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 2, bottom: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  request.nameClient,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w600,
                   ),
-                  Text(
-                    dateTime(request.dateTime),
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.caption!.color,
-                    ),
+                ),
+                Text(
+                  dateTime(request.dateTime),
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.caption!.color,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Text(
-              request.title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
+          ),
+          Text(
+            request.description,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

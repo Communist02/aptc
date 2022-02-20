@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'classes.dart';
 import 'global.dart';
 
+List<Client> clients = globalClients.map((e) => Client.clone(e)).toList();
+List<bool> selected =
+    List<bool>.generate(globalClients.length, (int index) => false);
+
 class ClientsPage extends StatefulWidget {
   const ClientsPage({Key? key}) : super(key: key);
 
@@ -11,9 +15,6 @@ class ClientsPage extends StatefulWidget {
 
 class _ClientsPageState extends State<ClientsPage> {
   bool isEdit = false;
-  List<Client> clients = globalClients.map((e) => Client.clone(e)).toList();
-  List<bool> selected =
-      List<bool>.generate(globalClients.length, (int index) => false);
 
   @override
   Widget build(BuildContext context) {

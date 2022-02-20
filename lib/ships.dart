@@ -25,7 +25,6 @@ class ShipView extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       child: Card(
-        elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(21)),
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
         child: Padding(

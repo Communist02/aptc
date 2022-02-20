@@ -12,71 +12,58 @@ class AppThemes {
   }
 
   ThemeData light() {
-    const Color accentColor = Colors.deepPurpleAccent;
-    const Color cardColor = Color(0xFFEEEEEE);
+    const Color primaryColor = Color(0xFFC3E7FF);
+    const Color cardColor = Color(0xFFF4F6F8);
 
-    final ThemeData base = ThemeData(
-     brightness: Brightness.light,
-      primarySwatch: _materialColor(accentColor),
-      primaryColor: accentColor,
-      scaffoldBackgroundColor: Colors.white,
-      indicatorColor: accentColor,
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+      primarySwatch: _materialColor(primaryColor),
+      indicatorColor: primaryColor,
       cardColor: cardColor,
-      appBarTheme: const AppBarTheme(
+      scaffoldBackgroundColor: Colors.white,
+      cardTheme: const CardTheme(
         elevation: 0,
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.white,
       ),
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
+      appBarTheme: const AppBarTheme(
+        color: primaryColor,
         elevation: 2,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.grey[700],
-      ),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedItemColor: accentColor,
-        unselectedItemColor: Colors.black,
       ),
       tabBarTheme: const TabBarTheme(
         labelColor: Colors.black,
         unselectedLabelColor: Colors.black,
       ),
+      navigationBarTheme: NavigationBarThemeData(
+        indicatorColor: primaryColor,
+        backgroundColor: cardColor,
+        height: 64,
+        labelTextStyle: MaterialStateProperty.all(
+          const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        ),
+      ),
     );
-    return base;
   }
 
   ThemeData dark() {
-    const Color primaryColor = Color(0xFF202020);
-    const Color cardColor = Color(0xFF272727);
+    const Color primaryColor = Color(0xFF004A77);
 
-    final ThemeData base = ThemeData(
+    return ThemeData(
+      useMaterial3: true,
       brightness: Brightness.dark,
-      primarySwatch: _materialColor(Colors.white),
-      primaryColor: primaryColor,
-      cardColor: cardColor,
-      backgroundColor: primaryColor,
-      splashColor: Colors.white10,
-      indicatorColor: Colors.white,
-      appBarTheme: const AppBarTheme(
-        backgroundColor: primaryColor,
-        elevation: 0,
-      ),
-      scaffoldBackgroundColor: primaryColor,
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        elevation: 2,
-        backgroundColor: cardColor,
-        foregroundColor: Colors.grey[400],
-      ),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        backgroundColor: cardColor,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.grey,
+      colorSchemeSeed: primaryColor,
+      indicatorColor: primaryColor,
+      navigationBarTheme: NavigationBarThemeData(
+        indicatorColor: primaryColor,
+        height: 64,
+        labelTextStyle: MaterialStateProperty.all(
+          const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        ),
       ),
       tabBarTheme: const TabBarTheme(
         labelColor: Colors.white,
         unselectedLabelColor: Colors.white,
       ),
     );
-    return base;
   }
 }
 

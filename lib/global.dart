@@ -14,9 +14,16 @@ List<Client> globalClients = [];
 List<Request> globalRequests = [
   Request(
     'Перевозка контейнера',
-    'Перевести контейнер 2, 3, 6 метров',
+    {},
     '0',
     'Мазур Денис Олегович',
+    DateTime.now(),
+  ),
+  Request(
+    'Перевозка контейнера',
+    {},
+    '0',
+    'Путин Владимир Владимирович',
     DateTime.now(),
   ),
 ];

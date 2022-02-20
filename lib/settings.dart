@@ -23,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         children: [
           Card(
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
             child: InkWell(
@@ -74,7 +74,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           Card(
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
             child: const ListTile(

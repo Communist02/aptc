@@ -27,13 +27,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ChangeTheme(),
           builder: (BuildContext context, _) {
-            context.watch<ChangeTheme>().getTheme;
             return MaterialApp(
               title: 'АТТК',
-              themeMode: AppThemes().getMode(appSettings['theme']!),
+              themeMode:
+                  AppThemes().getMode(context.watch<ChangeTheme>().getTheme),
               theme: AppThemes().light(),
               darkTheme: AppThemes().dark(),
-              home: const HomePage(title: 'АТТК'),
+              home: const HomePage(),
             );
           },
         ),
