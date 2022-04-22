@@ -5,6 +5,8 @@ import 'state_update.dart';
 import 'themes.dart';
 import 'global.dart';
 import 'home.dart';
+import 'firebase.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +15,15 @@ void main() async {
   final theme = prefs.getString('theme');
   if (theme != null) appSettings['theme'] = theme;
 
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyCwb7wfHs1Q8vmCMafEdA-3CMSHqlBUlA4',
+      appId: '1:182561817454:android:07fb8984b5e41c8007377f',
+      messagingSenderId: '182561817454',
+      projectId: 'aptc-base',
+    ),
+  );
+  AuthService().sign();
   runApp(const MyApp());
 }
 

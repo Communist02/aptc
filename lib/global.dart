@@ -1,5 +1,7 @@
 import 'classes.dart';
 
+Account account = Account();
+
 Map<String, String> appSettings = {'theme': 'system'};
 
 List<Ship> globalShips = [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'firebase.dart';
 import 'global.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,43 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       body: ListView(
         children: [
+          Card(
+            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
+            child: InkWell(
+              child: const ListTile(
+                leading: Icon(Icons.exit_to_app_outlined, size: 34),
+                title: Text('Выход из аккаунта'),
+                subtitle: Text('Выйти из вашего аккаунта'),
+              ),
+              onTap: () {
+                showDialog<String>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Вы уверены?', textScaleFactor: 1.2),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'no'),
+                        child: const Text('Нет', textScaleFactor: 1.2),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'yes'),
+                        child: const Text('Да', textScaleFactor: 1.2),
+                      ),
+                    ],
+                  ),
+                ).then((value) async {
+                  if (value == 'yes') {
+                    final AuthService _authService = AuthService();
+                    await _authService.signOut();
+                    account.clear();
+                    Navigator.pop(context);
+                  }
+                });
+              },
+            ),
+          ),
           Card(
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             shape:

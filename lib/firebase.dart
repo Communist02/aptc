@@ -1,6 +1,69 @@
-import 'package:firedart/firedart.dart';
+import 'package:firedart/firestore/firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:convert';
 import 'classes.dart';
+import 'global.dart';
+
+class AuthService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  //final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  Future<bool> signEmailPassword(String email, String password) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+    } catch (_) {}
+    if (_auth.currentUser == null) return false;
+    account.id = _auth.currentUser?.uid;
+    account.email = _auth.currentUser?.email;
+    //final CollectionReference accounts = firestore.collection('accounts');
+    //final acc = await accounts.doc(account.id).get();
+    //account.nickname = acc['nickname'];
+    return true;
+  }
+
+  Future<bool> registerEmailPassword(
+      String email, String password, String nickname) async {
+    try {
+      await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+    } catch (_) {}
+    if (_auth.currentUser == null) return false;
+    account.id = _auth.currentUser?.uid;
+    account.email = _auth.currentUser?.email;
+
+    //final CollectionReference accounts = firestore.collection('accounts');
+    //accounts.doc(account.id).set({'nickname': nickname});
+    account.nickname = nickname;
+    return true;
+  }
+
+  Future<bool> resetPassword(String email) async {
+    _auth.sendPasswordResetEmail(email: email);
+    return true;
+  }
+
+  void sign() async {
+    if (_auth.currentUser != null) {
+      account.id = _auth.currentUser!.uid;
+      account.email = _auth.currentUser!.email;
+      //final CollectionReference accounts = firestore.collection('accounts');
+      //final acc = await accounts.doc(account.id).get();
+      //account.nickname = acc['nickname'];
+    }
+  }
+
+  Future signOut() async {
+    await _auth.signOut();
+  }
+
+  bool checkSign() {
+    return _auth.currentUser != null;
+  }
+
+  String? getId() {
+    return _auth.currentUser?.uid;
+  }
+}
 
 class CloudStore {
   Firestore firestore = Firestore('aptc-base');
@@ -22,5 +85,51 @@ class CloudStore {
     }
     requests.sort((a, b) => b.dateTime.compareTo(a.dateTime));
     return requests;
+  }
+
+  Future<Contact> getContact(String idContact) async {
+    final chatsBase = firestore.collection('messages');
+    final accountsBase = firestore.collection('accounts');
+    final acc = await accountsBase.document(idContact).get();
+    Contact contact = Contact(idContact, acc['nickname'], []);
+    final firstMessagesResult = await chatsBase
+        .where('idSender', isEqualTo: account.id.toString())
+        .where('idRecipient', isEqualTo: idContact)
+        .get();
+    final secondMessagesResult = await chatsBase
+        .where('idSender', isEqualTo: idContact)
+        .where('idRecipient', isEqualTo: account.id.toString())
+        .get();
+    for (final message in firstMessagesResult) {
+      final messageTMP = Message(
+        message['idSender'],
+        message['idRecipient'],
+        message['value'],
+        DateTime.fromMillisecondsSinceEpoch(message['dateTime'].seconds * 1000),
+      );
+      contact.chat.add(messageTMP);
+    }
+    for (final message in secondMessagesResult) {
+      final messageTMP = Message(
+        message['idSender'],
+        message['idRecipient'],
+        message['value'],
+        DateTime.fromMillisecondsSinceEpoch(message['dateTime'].seconds * 1000),
+      );
+      contact.chat.add(messageTMP);
+    }
+    contact.sortMessages();
+    return contact;
+  }
+
+  Future<bool> addMessage(Message message) async {
+    final messagesBase = firestore.collection('messages');
+    messagesBase.add({
+      'idSender': message.idSender,
+      'idRecipient': message.idRecipient,
+      'value': message.value,
+      'dateTime': message.dateTime,
+    });
+    return true;
   }
 }
