@@ -16,6 +16,16 @@ class Client {
 
   Client();
 
+  Client.fromMap(map) {
+    companyName = map['companyName'];
+    contactPerson = map['contactPerson'];
+    contactInformation = map['contactInformation'];
+    address = map['address'];
+    country = map['country'];
+    manager = map['manager'];
+    numberOrders = map['numberOrders'];
+  }
+
   Client.set(
     this.companyName,
     this.contactPerson,
@@ -36,6 +46,18 @@ class Client {
       source.manager,
       source.numberOrders,
     );
+  }
+
+  Map<String, String> toMap() {
+    return {
+      'companyName': companyName,
+      'contactPerson': contactPerson,
+      'contactInformation': contactInformation,
+      'address': address,
+      'country': country,
+      'manager': manager,
+      'numberOrders': numberOrders,
+    };
   }
 }
 

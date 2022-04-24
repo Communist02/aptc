@@ -38,23 +38,27 @@ class _SettingsPageState extends State<SettingsPage> {
                   context: context,
                   builder: (context) => AlertDialog(
                     title: const Text('Вы уверены?', textScaleFactor: 1.2),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(21)),
                     actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'no'),
-                        child: const Text('Нет', textScaleFactor: 1.2),
+                      ListTile(
+                        leading: const Icon(Icons.not_interested_outlined),
+                        title: const Text('Нет', textScaleFactor: 1.2),
+                        onTap: () => Navigator.pop(context, 'false'),
                       ),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'yes'),
-                        child: const Text('Да', textScaleFactor: 1.2),
+                      ListTile(
+                        leading: const Icon(Icons.exit_to_app_outlined),
+                        title: const Text('Да', textScaleFactor: 1.2),
+                        onTap: () => Navigator.pop(context, 'true'),
                       ),
                     ],
                   ),
                 ).then((value) async {
-                  if (value == 'yes') {
+                  if (value == 'true') {
                     final AuthService _authService = AuthService();
                     await _authService.signOut();
                     account.clear();
-                    Navigator.pop(context);
+                    context.read<ChangeProfile>().change();
                   }
                 });
               },

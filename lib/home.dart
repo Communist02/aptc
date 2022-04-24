@@ -1,11 +1,14 @@
+import 'package:aptc/messages.dart';
 import 'package:aptc/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'ships.dart';
 import 'clients.dart';
 import 'settings.dart';
 import 'requests.dart';
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'global.dart';
+import 'state_update.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,11 +22,13 @@ class _HomePageState extends State<HomePage> {
     const ShipsPage(),
     const ClientsPage(),
     const RequestsPage(),
+    const MessagesPage(),
     const SettingsPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
+    context.watch<ChangeProfile>();
     if (account.id != null) {
       return DefaultTabController(
         length: _pages.length,
@@ -76,6 +81,13 @@ class _HomePageState extends State<HomePage> {
                         size: 40,
                       ),
                       text: 'Заявки',
+                    ),
+                    Tab(
+                      icon: Icon(
+                        Icons.message_outlined,
+                        size: 40,
+                      ),
+                      text: 'Сообщения',
                     ),
                     Tab(
                       icon: Icon(

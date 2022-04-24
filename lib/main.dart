@@ -7,6 +7,7 @@ import 'global.dart';
 import 'home.dart';
 import 'firebase.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'dart:convert';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,6 +15,9 @@ void main() async {
 
   final theme = prefs.getString('theme');
   if (theme != null) appSettings['theme'] = theme;
+
+  final clientsBase = prefs.getString('clientsBase');
+  if (clientsBase != null) globalClients = jsonDecode(clientsBase);
 
   await Firebase.initializeApp(
     options: const FirebaseOptions(
@@ -35,6 +39,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ChangeNavigation()),
+        ChangeNotifierProvider(create: (context) => ChangeProfile()),
         ChangeNotifierProvider(
           create: (context) => ChangeTheme(),
           builder: (BuildContext context, _) {

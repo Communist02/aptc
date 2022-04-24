@@ -41,17 +41,22 @@ class AppThemes {
           const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
         ),
       ),
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: Colors.black,
+      ),
     );
   }
 
   ThemeData dark() {
     const Color primaryColor = Color(0xFF004A77);
+    const Color cardColor = Color(0xFF242628);
 
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
       colorSchemeSeed: primaryColor,
       indicatorColor: primaryColor,
+      cardColor: cardColor,
       navigationBarTheme: NavigationBarThemeData(
         indicatorColor: primaryColor,
         height: 64,

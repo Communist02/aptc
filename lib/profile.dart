@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'state_update.dart';
 import 'global.dart';
 import 'firebase.dart';
-import 'home.dart';
 
 bool _reg = false;
 bool _reset = false;
@@ -140,12 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     _password = '';
                     _password2 = '';
                   });
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomePage(),
-                    ),
-                  ).then((value) => setState(() {}));
+                  context.read<ChangeProfile>().change();
                 } else {
                   ScaffoldMessenger.of(context).removeCurrentSnackBar();
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -348,7 +344,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Регистрация прошла успешно'),
                     ));
-                    setState(() => _reg = false);
+                    _reg = false;
+                    context.read<ChangeProfile>().change();
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Регистрация не удалась'),

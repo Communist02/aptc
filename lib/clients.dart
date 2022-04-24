@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'classes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'global.dart';
+import 'dart:convert';
 
-List<Client> clients = globalClients.map((e) => Client.clone(e)).toList();
+List<Map<String, String>> clients =
+    globalClients.map((e) => Map<String, String>.from(e)).toList();
 List<bool> selected =
     List<bool>.generate(globalClients.length, (int index) => false);
 
@@ -16,52 +18,62 @@ class ClientsPage extends StatefulWidget {
 class _ClientsPageState extends State<ClientsPage> {
   bool isEdit = false;
 
+  void saveBase() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('clientsBase', jsonEncode(globalClients));
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<DataCell> cells(Client client) {
+    List<DataCell> cells(Map<String, String> client) {
       final row = [
-        client.companyName,
-        client.contactPerson,
-        client.contactInformation,
-        client.address,
-        client.country,
-        client.manager,
-        client.numberOrders,
+        client['companyName'],
+        client['contactPerson'],
+        client['contactInformation'],
+        client['address'],
+        client['country'],
+        client['manager'],
+        client['numberOrders'],
       ];
-      List<DataCell> cell = [];
+      setState(() {});
+      List<DataCell> _cells = [];
       for (int i = 0; i < row.length; i++) {
-        cell.add(DataCell(isEdit
-            ? TextFormField(
-                initialValue: row[i],
-                onChanged: (value) {
-                  switch (i) {
-                    case 0:
-                      client.companyName = value;
-                      break;
-                    case 1:
-                      client.contactPerson = value;
-                      break;
-                    case 2:
-                      client.contactInformation = value;
-                      break;
-                    case 3:
-                      client.address = value;
-                      break;
-                    case 4:
-                      client.country = value;
-                      break;
-                    case 5:
-                      client.manager = value;
-                      break;
-                    case 6:
-                      client.numberOrders = value;
-                      break;
-                  }
-                },
-              )
-            : Text(row[i])));
+        _cells.add(
+          DataCell(
+            isEdit
+                ? TextField(
+                    controller: TextEditingController(text: row[i] ?? ''),
+                    onChanged: (value) {
+                      switch (i) {
+                        case 0:
+                          client['companyName'] = value;
+                          break;
+                        case 1:
+                          client['contactPerson'] = value;
+                          break;
+                        case 2:
+                          client['contactInformation'] = value;
+                          break;
+                        case 3:
+                          client['address'] = value;
+                          break;
+                        case 4:
+                          client['country'] = value;
+                          break;
+                        case 5:
+                          client['manager'] = value;
+                          break;
+                        case 6:
+                          client['numberOrders'] = value;
+                          break;
+                      }
+                    },
+                  )
+                : Text(row[i] ?? ''),
+          ),
+        );
       }
-      return cell;
+      return _cells;
     }
 
     DataTable table = DataTable(
@@ -75,9 +87,8 @@ class _ClientsPageState extends State<ClientsPage> {
         DataColumn(label: Text('Менеджер')),
         DataColumn(label: Text('Кол-во заказов')),
       ],
-      rows: List<DataRow>.generate(
-        clients.length,
-        (index) => DataRow(
+      rows: List<DataRow>.generate(clients.length, (index) {
+        return DataRow(
           selected: selected[index],
           onSelectChanged: (bool? value) {
             setState(() {
@@ -85,18 +96,19 @@ class _ClientsPageState extends State<ClientsPage> {
             });
           },
           color: MaterialStateProperty.resolveWith<Color?>(
-              (Set<MaterialState> states) {
-            if (states.contains(MaterialState.selected)) {
-              return Theme.of(context).colorScheme.primary.withOpacity(0.08);
-            }
-            if (index.isEven) {
-              return Colors.grey.withOpacity(0.1);
-            }
-            return null; // Use default value for other states and odd rows.
-          }),
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.selected)) {
+                return Theme.of(context).colorScheme.primary.withOpacity(0.08);
+              }
+              if (index.isEven) {
+                return Colors.grey.withOpacity(0.1);
+              }
+              return null; // Use default value for other states and odd rows.
+            },
+          ),
           cells: cells(clients[index]),
-        ),
-      ),
+        );
+      }),
     );
 
     return Column(
@@ -109,7 +121,7 @@ class _ClientsPageState extends State<ClientsPage> {
               child: ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    clients.add(Client());
+                    clients.add({});
                     selected.add(false);
                   });
                 },
@@ -121,8 +133,10 @@ class _ClientsPageState extends State<ClientsPage> {
               child: ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    globalClients =
-                        clients.map((e) => Client.clone(e)).toList();
+                    globalClients = clients
+                        .map((e) => Map<String, String>.from(e))
+                        .toList();
+                    saveBase();
                     isEdit = false;
                   });
                 },
@@ -134,8 +148,9 @@ class _ClientsPageState extends State<ClientsPage> {
               child: ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    clients =
-                        globalClients.map((e) => Client.clone(e)).toList();
+                    clients = globalClients
+                        .map((e) => Map<String, String>.from(e))
+                        .toList();
                     selected = List<bool>.generate(
                         globalClients.length, (int index) => false);
                     isEdit = false;

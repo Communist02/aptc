@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'chat.dart';
 import 'classes.dart';
 import 'global.dart';
 import 'firebase.dart';
@@ -13,6 +14,15 @@ class RequestsPage extends StatefulWidget {
 
 class _RequestsPageState extends State<RequestsPage> {
   final CloudStore _cloudStore = CloudStore();
+  void chat(String id) async {
+    final contact = await _cloudStore.getContact(id);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChatPage(contact),
+      ),
+    );
+  }
   int number = 0;
 
   @override
@@ -96,7 +106,9 @@ class _RequestsPageState extends State<RequestsPage> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        chat(globalRequests[number].idClient);
+                      },
                       child: const Text('Написать'),
                     ),
                   ],
