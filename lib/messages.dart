@@ -100,11 +100,13 @@ class ContactView extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 56,
-              width: 56,
-              child: FlutterLogo(),
-            ),
+            ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: const Icon(
+                    Icons.person_outline,
+                    size: 56,
+                  ),
+                ),
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.only(left: 10),

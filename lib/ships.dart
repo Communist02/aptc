@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'classes.dart';
 import 'global.dart';
+import 'state_update.dart';
+import 'package:easy_web_view/easy_web_view.dart';
+
+Ship? _ship;
 
 class ShipsPage extends StatefulWidget {
   const ShipsPage({Key? key}) : super(key: key);
@@ -12,7 +17,27 @@ class ShipsPage extends StatefulWidget {
 class _ShipsPageState extends State<ShipsPage> {
   @override
   Widget build(BuildContext context) {
-    return const ShipsView();
+    context.watch<ChangeShip>();
+
+    if (_ship == null) {
+      return const ShipsView();
+    } else {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(_ship!.name),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              _ship = null;
+              context.read<ChangeShip>().change();
+            },
+          ),
+        ),
+        body: EasyWebView(
+          src: _ship!.link,
+        ),
+      );
+    }
   }
 }
 
@@ -24,6 +49,10 @@ class ShipView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () {
+        _ship = ship;
+        context.read<ChangeShip>().change();
+      },
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(21)),
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),

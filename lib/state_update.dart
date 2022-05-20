@@ -22,6 +22,16 @@ class ChangeProfile with ChangeNotifier {
   }
 }
 
+class ChangeShip with ChangeNotifier {
+  final bool _ship = true;
+
+  bool get get => _ship;
+
+  void change() {
+    notifyListeners();
+  }
+}
+
 class ChangeNavigation with ChangeNotifier {
   int _index = 0;
   bool _switch = false;

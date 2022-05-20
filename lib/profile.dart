@@ -165,19 +165,19 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          InkWell(
-            onTap: () {
-              setState(() => _reg = true);
-            },
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              alignment: Alignment.center,
-              child: const Text(
-                'Зарегистрироваться',
-                style: TextStyle(fontSize: 16),
-              ),
-            ),
-          ),
+          // InkWell(
+          //   onTap: () {
+          //     setState(() => _reg = true);
+          //   },
+          //   child: Container(
+          //     margin: const EdgeInsets.symmetric(vertical: 10),
+          //     alignment: Alignment.center,
+          //     child: const Text(
+          //       'Зарегистрироваться',
+          //       style: TextStyle(fontSize: 16),
+          //     ),
+          //   ),
+          // ),
         ],
       );
     }

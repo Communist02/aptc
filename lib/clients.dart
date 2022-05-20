@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'global.dart';
 import 'dart:convert';
 
+bool isEdit = false;
 List<Map<String, String>> clients =
     globalClients.map((e) => Map<String, String>.from(e)).toList();
 List<bool> selected =
@@ -16,8 +17,6 @@ class ClientsPage extends StatefulWidget {
 }
 
 class _ClientsPageState extends State<ClientsPage> {
-  bool isEdit = false;
-
   void saveBase() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('clientsBase', jsonEncode(globalClients));
@@ -43,6 +42,7 @@ class _ClientsPageState extends State<ClientsPage> {
             isEdit
                 ? TextField(
                     controller: TextEditingController(text: row[i] ?? ''),
+                    style: const TextStyle(fontSize: 14),
                     onChanged: (value) {
                       switch (i) {
                         case 0:
@@ -79,13 +79,13 @@ class _ClientsPageState extends State<ClientsPage> {
     DataTable table = DataTable(
       border: TableBorder.all(color: Colors.grey.withOpacity(0.3)),
       columns: const [
-        DataColumn(label: Text('Название компании')),
-        DataColumn(label: Text('Контактное лицо')),
-        DataColumn(label: Text('Контактная информация')),
+        DataColumn(label: Text('Название\nкомпании')),
+        DataColumn(label: Text('Контактное\nлицо')),
+        DataColumn(label: Text('Контактная\nинформация')),
         DataColumn(label: Text('Адрес')),
         DataColumn(label: Text('Страна')),
         DataColumn(label: Text('Менеджер')),
-        DataColumn(label: Text('Кол-во заказов')),
+        DataColumn(label: Text('Кол-во\nзаказов')),
       ],
       rows: List<DataRow>.generate(clients.length, (index) {
         return DataRow(

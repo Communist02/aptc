@@ -3,7 +3,9 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  desktop_webview_auth
+  permission_handler_windows
+  url_launcher_windows
+  webview_windows
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)

@@ -1,64 +1,9 @@
 class Ship {
   String name;
   String description;
+  String link;
 
-  Ship(this.name, this.description);
-}
-
-class Client {
-  String companyName = '';
-  String contactPerson = '';
-  String contactInformation = '';
-  String address = '';
-  String country = '';
-  String manager = '';
-  String numberOrders = '';
-
-  Client();
-
-  Client.fromMap(map) {
-    companyName = map['companyName'];
-    contactPerson = map['contactPerson'];
-    contactInformation = map['contactInformation'];
-    address = map['address'];
-    country = map['country'];
-    manager = map['manager'];
-    numberOrders = map['numberOrders'];
-  }
-
-  Client.set(
-    this.companyName,
-    this.contactPerson,
-    this.contactInformation,
-    this.address,
-    this.country,
-    this.manager,
-    this.numberOrders,
-  );
-
-  factory Client.clone(Client source) {
-    return Client.set(
-      source.companyName,
-      source.contactPerson,
-      source.contactInformation,
-      source.address,
-      source.country,
-      source.manager,
-      source.numberOrders,
-    );
-  }
-
-  Map<String, String> toMap() {
-    return {
-      'companyName': companyName,
-      'contactPerson': contactPerson,
-      'contactInformation': contactInformation,
-      'address': address,
-      'country': country,
-      'manager': manager,
-      'numberOrders': numberOrders,
-    };
-  }
+  Ship(this.name, this.description, this.link);
 }
 
 class Request {
@@ -96,7 +41,7 @@ class Contact {
     }
   }
 
-  addMessage(String idSender, String value) {
+  void addMessage(String idSender, String value) {
     chat.add(Message(idSender, nickname, value, DateTime.now()));
   }
 

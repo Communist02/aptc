@@ -35,7 +35,13 @@ class _ChatPageState extends State<ChatPage> {
                 margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
                 height: 32,
                 width: 32,
-                child: const FlutterLogo(),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: const Icon(
+                    Icons.person_outline,
+                    size: 32,
+                  ),
+                ),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 6),
@@ -60,7 +66,7 @@ class _ChatPageState extends State<ChatPage> {
         ],
       ),
       body: Container(
-        margin: const EdgeInsets.only(bottom: 50),
+        margin: const EdgeInsets.only(bottom: 30),
         child: ChatView(contact.chat),
       ),
       bottomSheet: Container(
@@ -73,9 +79,9 @@ class _ChatPageState extends State<ChatPage> {
                 controller: textController,
                 focusNode: focusNode,
                 minLines: 1,
-                maxLines: 4,
-                decoration:
-                    const InputDecoration(hintText: 'Сообщение', border: InputBorder.none),
+                maxLines: 20,
+                decoration: const InputDecoration(
+                    hintText: 'Сообщение', border: InputBorder.none),
                 onChanged: (value) {
                   setState(() {
                     value.isEmpty ? isChanged = false : isChanged = true;
@@ -155,7 +161,7 @@ class MessageView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      DateFormat('hh:mm').format(message.dateTime),
+                      DateFormat('HH:mm').format(message.dateTime),
                       style: TextStyle(
                         fontSize: 12,
                         color: isYou

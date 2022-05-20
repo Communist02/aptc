@@ -3,7 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
-  desktop_webview_auth
+  url_launcher_linux
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)

@@ -40,10 +40,12 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => ChangeNavigation()),
         ChangeNotifierProvider(create: (context) => ChangeProfile()),
+        ChangeNotifierProvider(create: (context) => ChangeShip()),
         ChangeNotifierProvider(
           create: (context) => ChangeTheme(),
           builder: (BuildContext context, _) {
             return MaterialApp(
+              debugShowCheckedModeBanner: false,
               title: 'АТТК',
               themeMode:
                   AppThemes().getMode(context.watch<ChangeTheme>().getTheme),

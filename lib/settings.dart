@@ -121,7 +121,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
             child: const ListTile(
               title: Text('АТТК'),
-              subtitle: Text('Версия 0.1 Alpha'),
+              subtitle: Text('Версия 0.9 Beta'),
             ),
           ),
         ],
