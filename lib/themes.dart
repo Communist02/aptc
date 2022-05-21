@@ -12,7 +12,7 @@ class AppThemes {
   }
 
   ThemeData light() {
-    const Color primaryColor = Color(0xFFC3E7FF);
+    const Color primaryColor = Color(0xFF244a9a);
     const Color cardColor = Color(0xFFF4F6F8);
 
     return ThemeData(
@@ -21,17 +21,18 @@ class AppThemes {
       primarySwatch: _materialColor(primaryColor),
       indicatorColor: primaryColor,
       cardColor: cardColor,
-      scaffoldBackgroundColor: Colors.white,
       cardTheme: const CardTheme(
         elevation: 0,
       ),
       appBarTheme: const AppBarTheme(
         color: primaryColor,
+        iconTheme: IconThemeData(color: Colors.white),
+        titleTextStyle: TextStyle(color: Colors.white, fontSize: 24,fontWeight: FontWeight.w600),
         elevation: 2,
       ),
       tabBarTheme: const TabBarTheme(
-        labelColor: Colors.black,
-        unselectedLabelColor: Colors.black,
+        labelColor: Colors.white,
+        unselectedLabelColor: Colors.white,
       ),
       navigationBarTheme: NavigationBarThemeData(
         indicatorColor: primaryColor,

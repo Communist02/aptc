@@ -24,9 +24,10 @@ class _MessagesPageState extends State<MessagesPage> {
         title: TextField(
           controller: textController,
           decoration: const InputDecoration(
-            icon: Icon(Icons.search_outlined, color: Colors.grey),
+            icon: Icon(Icons.search_outlined, color: Colors.white),
             hintText: 'Поиск',
             border: InputBorder.none,
+            hintStyle: TextStyle(color: Colors.white),
           ),
           onChanged: (value) => setState(() {}),
         ),

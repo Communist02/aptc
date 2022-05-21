@@ -22,19 +22,4 @@ List<Ship> globalShips = [
 SearchHistory searchHistory = SearchHistory([]);
 Contacts globalContacts = Contacts([]);
 List<dynamic> globalClients = [];
-List<Request> globalRequests = [
-  Request(
-    'Перевозка контейнера',
-    {},
-    '0',
-    'Мазур Денис Олегович',
-    DateTime.now(),
-  ),
-  Request(
-    'Перевозка контейнера',
-    {},
-    '0',
-    'Путин Владимир Владимирович',
-    DateTime.now(),
-  ),
-];
+List<Request> globalRequests = [];
