@@ -45,8 +45,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               child: const Text('ВЫЙТИ', style: TextStyle(fontSize: 15)),
               onPressed: () async {
-                final AuthService _authService = AuthService();
-                await _authService.signOut();
+                final AuthService authService = AuthService();
+                await authService.signOut();
                 setState(() => account.clear());
               },
             ),
@@ -131,8 +131,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               onPressed: () async {
-                final AuthService _authService = AuthService();
-                if (await _authService.signEmailPassword(_email, _password)) {
+                final AuthService authService = AuthService();
+                if (await authService.signEmailPassword(_email, _password)) {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('Вход выполнен успешно'),
                   ));
@@ -338,8 +338,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  final AuthService _authService = AuthService();
-                  if (await _authService.registerEmailPassword(
+                  final AuthService authService = AuthService();
+                  if (await authService.registerEmailPassword(
                       _email, _password, _nickname)) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('Регистрация прошла успешно'),
@@ -426,8 +426,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               onPressed: () async {
-                final AuthService _authService = AuthService();
-                if (await _authService.resetPassword(_email)) {
+                final AuthService authService = AuthService();
+                if (await authService.resetPassword(_email)) {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text('Инструкция выслана на ваш email'),
                   ));

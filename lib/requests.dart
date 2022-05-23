@@ -15,8 +15,10 @@ class RequestsPage extends StatefulWidget {
 class _RequestsPageState extends State<RequestsPage> {
   int number = 0;
   final CloudStore _cloudStore = CloudStore();
+
   void chat(String id) async {
     final contact = await _cloudStore.getContact(id);
+    if (!mounted) return;
     Navigator.push(
       context,
       MaterialPageRoute(

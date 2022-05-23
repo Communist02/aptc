@@ -55,9 +55,10 @@ class _SettingsPageState extends State<SettingsPage> {
                   ),
                 ).then((value) async {
                   if (value == 'true') {
-                    final AuthService _authService = AuthService();
-                    await _authService.signOut();
+                    final AuthService authService = AuthService();
+                    await authService.signOut();
                     account.clear();
+                    if (!mounted) return;
                     context.read<ChangeProfile>().change();
                   }
                 });

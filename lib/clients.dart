@@ -35,9 +35,9 @@ class _ClientsPageState extends State<ClientsPage> {
         client['numberOrders'],
       ];
       setState(() {});
-      List<DataCell> _cells = [];
+      List<DataCell> cells = [];
       for (int i = 0; i < row.length; i++) {
-        _cells.add(
+        cells.add(
           DataCell(
             isEdit
                 ? TextField(
@@ -73,7 +73,7 @@ class _ClientsPageState extends State<ClientsPage> {
           ),
         );
       }
-      return _cells;
+      return cells;
     }
 
     DataTable table = DataTable(

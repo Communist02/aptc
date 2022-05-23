@@ -23,11 +23,12 @@ class _MessagesPageState extends State<MessagesPage> {
       appBar: AppBar(
         title: TextField(
           controller: textController,
-          decoration: const InputDecoration(
-            icon: Icon(Icons.search_outlined, color: Colors.white),
+          style: const TextStyle(color: Colors.white),
+          decoration: InputDecoration(
+            icon: const Icon(Icons.search_outlined, color: Colors.white),
             hintText: 'Поиск',
             border: InputBorder.none,
-            hintStyle: TextStyle(color: Colors.white),
+            hintStyle: TextStyle(color: Colors.white.withAlpha(200)),
           ),
           onChanged: (value) => setState(() {}),
         ),
@@ -69,15 +70,15 @@ class ContactView extends StatelessWidget {
     final DateTime timeNow = DateTime.now();
     final Duration difference = timeNow.difference(dateTime);
     if (difference.inMinutes < 1) {
-      return difference.inSeconds.toString() + ' сек. назад';
+      return '${difference.inSeconds} сек. назад';
     } else if (difference.inHours < 1) {
-      return difference.inMinutes.toString() + ' мин. назад';
+      return '${difference.inMinutes} мин. назад';
     } else if (difference.inDays < 1) {
-      return difference.inHours.toString() + ' ч. назад';
+      return '${difference.inHours} ч. назад';
     } else if (difference.inDays < 2) {
       return 'Вчера';
     } else if (difference.inDays < 7) {
-      return difference.inDays.toString() + ' д. назад';
+      return '${difference.inDays} д. назад';
     } else {
       return DateFormat('dd.MM.yyyy').format(dateTime);
     }
@@ -102,12 +103,12 @@ class ContactView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: const Icon(
-                    Icons.person_outline,
-                    size: 56,
-                  ),
-                ),
+              borderRadius: BorderRadius.circular(15),
+              child: const Icon(
+                Icons.person_outline,
+                size: 56,
+              ),
+            ),
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.only(left: 10),
@@ -155,10 +156,10 @@ class ContactView extends StatelessWidget {
 }
 
 FutureBuilder contactsView(String search) {
-  final CloudStore _cloudStore = CloudStore();
+  final CloudStore cloudStore = CloudStore();
 
   return FutureBuilder(
-    future: _cloudStore.getContacts(),
+    future: cloudStore.getContacts(),
     initialData: globalContacts,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       Widget build() {
