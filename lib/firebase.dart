@@ -66,7 +66,7 @@ class AuthService {
 }
 
 class CloudStore {
-  Firestore firestore = Firestore('aptc-base');
+  final Firestore firestore = Firestore('aptc-base');
 
   Future<List<Request>> getRequests() async {
     final requestsBase = firestore.collection('requests');
