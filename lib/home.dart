@@ -36,67 +36,71 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             toolbarHeight: 0,
             bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(80),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: ButtonsTabBar(
-                  height: 80,
-                  radius: 15,
-                  borderWidth: 1.5,
-                  duration: 0,
-                  labelSpacing: 10,
-                  borderColor: Theme.of(context).tabBarTheme.labelColor!,
-                  unselectedBorderColor: Colors.transparent,
-                  labelStyle: TextStyle(
-                      fontSize: 26,
+              preferredSize: const Size.fromHeight(100),
+              child: Card(
+                margin: const EdgeInsets.all(8),
+                color: Colors.indigo.shade600,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: ButtonsTabBar(
+                    height: 82,
+                    radius: 15,
+                    borderWidth: 1.5,
+                    duration: 0,
+                    labelSpacing: 10,
+                    borderColor: Theme.of(context).tabBarTheme.labelColor!,
+                    unselectedBorderColor: Colors.transparent,
+                    labelStyle: TextStyle(
+                        fontSize: 26,
+                        color: Theme.of(context).tabBarTheme.unselectedLabelColor,
+                        fontWeight: FontWeight.w600),
+                    unselectedLabelStyle: TextStyle(
                       color: Theme.of(context).tabBarTheme.unselectedLabelColor,
-                      fontWeight: FontWeight.w600),
-                  unselectedLabelStyle: TextStyle(
-                    color: Theme.of(context).tabBarTheme.unselectedLabelColor,
-                    fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    buttonMargin:
+                        const EdgeInsets.only(left: 10, top: 6, bottom: 6),
+                    backgroundColor: Colors.transparent,
+                    unselectedBackgroundColor: Colors.transparent,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 14),
+                    tabs: const [
+                      Tab(
+                        icon: Icon(
+                          Icons.directions_boat_outlined,
+                          size: 40,
+                        ),
+                        text: 'Судна',
+                      ),
+                      Tab(
+                        icon: Icon(
+                          Icons.person_outlined,
+                          size: 48,
+                        ),
+                        text: 'Клиенты',
+                      ),
+                      Tab(
+                        icon: Icon(
+                          Icons.assignment_turned_in_outlined,
+                          size: 40,
+                        ),
+                        text: 'Заявки',
+                      ),
+                      Tab(
+                        icon: Icon(
+                          Icons.message_outlined,
+                          size: 40,
+                        ),
+                        text: 'Сообщения',
+                      ),
+                      Tab(
+                        icon: Icon(
+                          Icons.settings_outlined,
+                          size: 40,
+                        ),
+                        text: 'Настройки',
+                      ),
+                    ],
                   ),
-                  buttonMargin:
-                      const EdgeInsets.only(left: 10, top: 6, bottom: 6),
-                  backgroundColor: Colors.transparent,
-                  unselectedBackgroundColor: Colors.transparent,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 14),
-                  tabs: const [
-                    Tab(
-                      icon: Icon(
-                        Icons.directions_boat_outlined,
-                        size: 40,
-                      ),
-                      text: 'Судна',
-                    ),
-                    Tab(
-                      icon: Icon(
-                        Icons.person_outlined,
-                        size: 48,
-                      ),
-                      text: 'Клиенты',
-                    ),
-                    Tab(
-                      icon: Icon(
-                        Icons.assignment_turned_in_outlined,
-                        size: 40,
-                      ),
-                      text: 'Заявки',
-                    ),
-                    Tab(
-                      icon: Icon(
-                        Icons.message_outlined,
-                        size: 40,
-                      ),
-                      text: 'Сообщения',
-                    ),
-                    Tab(
-                      icon: Icon(
-                        Icons.settings_outlined,
-                        size: 40,
-                      ),
-                      text: 'Настройки',
-                    ),
-                  ],
                 ),
               ),
             ),

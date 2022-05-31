@@ -69,47 +69,48 @@ class _ChatPageState extends State<ChatPage> {
         margin: const EdgeInsets.only(bottom: 30),
         child: ChatView(contact.chat),
       ),
-      bottomSheet: Container(
-        color: Theme.of(context).cardColor,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: [
-            Flexible(
-              child: TextField(
-                controller: textController,
-                focusNode: focusNode,
-                minLines: 1,
-                maxLines: 20,
-                decoration: const InputDecoration(
-                    hintText: 'Сообщение', border: InputBorder.none),
-                onChanged: (value) {
-                  setState(() {
-                    value.isEmpty ? isChanged = false : isChanged = true;
-                  });
-                },
+      bottomSheet: Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+            children: [
+              Flexible(
+                child: TextField(
+                  controller: textController,
+                  focusNode: focusNode,
+                  minLines: 1,
+                  maxLines: 20,
+                  decoration: const InputDecoration(
+                      hintText: 'Сообщение', border: InputBorder.none),
+                  onChanged: (value) {
+                    setState(() {
+                      value.isEmpty ? isChanged = false : isChanged = true;
+                    });
+                  },
+                ),
               ),
-            ),
-            isChanged
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        final Message message = Message(
-                          account.id!,
-                          contact.id,
-                          textController.value.text,
-                          DateTime.now(),
-                        );
-                        _cloudStore.addMessage(message);
-                        contact.chat.add(message);
-                        textController.clear();
-                        isChanged = false;
-                        focusNode.unfocus();
-                      });
-                    },
-                    icon: const Icon(Icons.send),
-                  )
-                : const SizedBox(height: 30),
-          ],
+              isChanged
+                  ? IconButton(
+                      onPressed: () {
+                        setState(() {
+                          final Message message = Message(
+                            account.id!,
+                            contact.id,
+                            textController.value.text,
+                            DateTime.now(),
+                          );
+                          _cloudStore.addMessage(message);
+                          contact.chat.add(message);
+                          textController.clear();
+                          isChanged = false;
+                          focusNode.unfocus();
+                        });
+                      },
+                      icon: const Icon(Icons.send),
+                    )
+                  : const SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
     );
