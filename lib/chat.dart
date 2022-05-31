@@ -132,8 +132,7 @@ class MessageView extends StatelessWidget {
         children: [
           Flexible(
             child: Card(
-              color:
-                  isYou ? Colors.deepPurpleAccent : null,
+              color: isYou ? Colors.deepPurpleAccent : null,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(13),
@@ -143,10 +142,11 @@ class MessageView extends StatelessWidget {
                 ),
               ),
               margin: EdgeInsets.only(
-                  top: 6,
-                  bottom: 6,
-                  left: (isYou ? 100 : 6),
-                  right: (isYou ? 6 : 100)),
+                top: 6,
+                bottom: 6,
+                left: (isYou ? 100 : 6),
+                right: (isYou ? 6 : 100),
+              ),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
