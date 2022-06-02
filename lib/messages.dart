@@ -169,7 +169,6 @@ FutureBuilder contactsView(String search) {
           globalContacts = snapshot.data;
           return ListView.builder(
             key: const PageStorageKey('MyOrders'),
-            padding: const EdgeInsets.symmetric(vertical: 5),
             itemCount: snapshot.data.contacts.length,
             itemBuilder: (context, int i) {
               if (search == '' ||

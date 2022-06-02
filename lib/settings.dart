@@ -25,8 +25,6 @@ class _SettingsPageState extends State<SettingsPage> {
         children: [
           Card(
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
             child: InkWell(
               child: const ListTile(
                 leading: Icon(Icons.exit_to_app_outlined, size: 34),
@@ -37,18 +35,16 @@ class _SettingsPageState extends State<SettingsPage> {
                 showDialog<String>(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('Вы уверены?', textScaleFactor: 1.2),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(21)),
+                    title: const Text('Вы уверены?'),
                     actions: [
                       ListTile(
                         leading: const Icon(Icons.not_interested_outlined),
-                        title: const Text('Нет', textScaleFactor: 1.2),
+                        title: const Text('Нет'),
                         onTap: () => Navigator.pop(context, 'false'),
                       ),
                       ListTile(
                         leading: const Icon(Icons.exit_to_app_outlined),
-                        title: const Text('Да', textScaleFactor: 1.2),
+                        title: const Text('Да'),
                         onTap: () => Navigator.pop(context, 'true'),
                       ),
                     ],
@@ -67,8 +63,6 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           Card(
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
             child: InkWell(
               child: ListTile(
                 leading: const Icon(Icons.color_lens_outlined, size: 34),
@@ -84,8 +78,6 @@ class _SettingsPageState extends State<SettingsPage> {
                   context: context,
                   builder: (context) => SimpleDialog(
                     title: const Text('Тема приложения'),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(21)),
                     children: [
                       ListTile(
                         leading: const Icon(Icons.wb_sunny_outlined),
@@ -116,11 +108,9 @@ class _SettingsPageState extends State<SettingsPage> {
               },
             ),
           ),
-          Card(
-            margin: const EdgeInsets.symmetric(horizontal: 10),
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(9)),
-            child: const ListTile(
+          const Card(
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            child: ListTile(
               title: Text('АТТК'),
               subtitle: Text('Версия 0.9 Beta'),
             ),

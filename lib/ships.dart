@@ -54,8 +54,7 @@ class ShipView extends StatelessWidget {
         context.read<ChangeShip>().change();
       },
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(21)),
-        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+        margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Row(
@@ -112,7 +111,6 @@ class ShipsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.builder(
       key: const PageStorageKey('Ships'),
-      padding: const EdgeInsets.symmetric(vertical: 5),
       itemCount: globalShips.length,
       itemBuilder: (context, int i) {
         return ShipView(globalShips[i]);
