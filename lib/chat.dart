@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'classes.dart';
 import 'package:intl/intl.dart';
 import 'global.dart';
@@ -27,34 +28,31 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
-        title: InkWell(
-          onTap: () {},
-          child: Row(
-            children: [
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
-                height: 32,
-                width: 32,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
-                  child: const Icon(
-                    Icons.person_outline,
-                    size: 32,
-                  ),
+        title: Row(
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 6),
+              height: 32,
+              width: 32,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: const Icon(
+                  Icons.person_outline,
+                  size: 32,
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 6),
-                child: Text(
-                  contact.nickname,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 6),
+              child: Text(
+                contact.nickname,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         actions: [
           PopupMenuButton(itemBuilder: (context) {
@@ -126,7 +124,12 @@ class MessageView extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isYou = message.idSender == account.id;
     return InkWell(
-      onLongPress: () {},
+      onLongPress: () {
+        Clipboard.setData(ClipboardData(text: message.value));
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Скопировано в буфер обмена'),
+        ));
+      },
       child: Row(
         mainAxisAlignment:
             isYou ? MainAxisAlignment.end : MainAxisAlignment.start,
